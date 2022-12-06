@@ -27,8 +27,14 @@ const llamarApi = async()=> {
     id++
     const resp = await fetch(`https://www.breakingbadapi.com/api/quotes/${id}`)
     const data = await resp.json()
-    $('#quote').text(data[0].quote)
-    $('#author').text(data[0].author)
+    if (resp.ok) {
+        $('#quote').text(data[0].quote)
+        $('#author').text(data[0].author)
+    } else {
+        $('#quote').text("Se ha presentado un error: "+resp.statusText)
+        $('#author').text("Codigo del error: "+resp.status)
+    }
+
 }
 
 $('#siguiente').on('click',llamarApi)
